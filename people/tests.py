@@ -19,10 +19,12 @@ class TestValidationErrorMixin:
 class PeopleModelTest(TestCase, TestValidationErrorMixin):
     def test_saving_and_retrieving_people(self):
         person = Person()
+
         person.title = "Herr"
-        person.name = "Mustermann"
+        person.name_or_company = "Mustermann"
         person.surname = "Max"
         person.birthday = date(2023, 5, 19)
+
         person.save()
 
         saved_people = Person.objects.all()
@@ -31,7 +33,7 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
         saved_person = saved_people[0]
 
         self.assertEqual(saved_person.title, "Herr")
-        self.assertEqual(saved_person.name, "Mustermann")
+        self.assertEqual(saved_person.name_or_company, "Mustermann")
         self.assertEqual(saved_person.surname, "Max")
         self.assertEqual(saved_person.birthday, date(2023, 5, 19))
 

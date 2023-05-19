@@ -7,8 +7,8 @@ class Person(models.Model):
             ("Herr", "Herr"),
             ("Frau", "Frau"),
             ("Firma", "Firma"),
-        ],
+            ],
     )
-    name = models.CharField(max_length=255, default="")
+    name_or_company = models.CharField(max_length=255, default="")
     surname = models.CharField(max_length=255, default="")
     birthday = models.DateField()
