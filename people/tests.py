@@ -23,7 +23,7 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
         person.title = "Herr"
         person.name_or_company = "Mustermann"
         person.surname = "Max"
-        person.birthday = date(2023, 5, 19)
+        person.date_of_birth = date(2023, 5, 19)
 
         person.save()
 
@@ -35,7 +35,7 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
         self.assertEqual(saved_person.title, "Herr")
         self.assertEqual(saved_person.name_or_company, "Mustermann")
         self.assertEqual(saved_person.surname, "Max")
-        self.assertEqual(saved_person.birthday, date(2023, 5, 19))
+        self.assertEqual(saved_person.date_of_birth, date(2023, 5, 19))
 
     def test_valitadion_of_title_field(self):
         person = Person(title="FooBar")

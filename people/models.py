@@ -11,4 +11,4 @@ class Person(models.Model):
     )
     name_or_company = models.CharField(max_length=255, default="")
     surname = models.CharField(max_length=255, default="")
-    birthday = models.DateField()
+    date_of_birth = models.DateField()
