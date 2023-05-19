@@ -17,7 +17,7 @@ class TestValidationErrorMixin:
                     e.message_dict[field_name][0], message)
 
 class PeopleModelTest(TestCase, TestValidationErrorMixin):
-    def test_saving_and_retrieving_people(self):
+    def test_saving_and_retrieving_person(self):
         person = Person()
 
         person.title = "Herr"
