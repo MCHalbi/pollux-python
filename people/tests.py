@@ -1,7 +1,7 @@
 from django.core.validators import ValidationError
 from django.test import TestCase
 from datetime import date
-from people.models import Person
+from people.models import Person, Adress
 
 class TestValidationErrorMixin:
     def assertValidationError(self, model_object, field_name, message=None):
@@ -25,6 +25,17 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
         person.surname = "Max"
         person.date_of_birth = date(2023, 5, 19)
 
+        adress = Adress()
+
+        adress.street = "Musterstraße 123"
+        adress.postal_code = "12345"
+        adress.city = "Musterstadt"
+        adress.country = "Musterland"
+
+        adress.save()
+
+        person.adress = adress
+
         person.save()
 
         saved_people = Person.objects.all()
@@ -37,6 +48,23 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
         self.assertEqual(saved_person.surname, "Max")
         self.assertEqual(saved_person.date_of_birth, date(2023, 5, 19))
 
+        self.assertEqual(saved_person.adress, adress)
+
+    def test_default_person_has_all_empty_fields(self):
+        person = Person()
+        person.save()
+
+        self.assertEqual(person.title, "")
+        self.assertEqual(person.name_or_company, "")
+        self.assertEqual(person.surname, "")
+        self.assertEqual(person.date_of_birth, None)
+
+        self.assertEqual(person.adress.street, "")
+        self.assertEqual(person.adress.postal_code, "")
+        self.assertEqual(person.adress.city, "")
+        self.assertEqual(person.adress.country, "")
+
+
     def test_valitadion_of_title_field(self):
         person = Person(title="FooBar")
 
@@ -44,3 +72,24 @@ class PeopleModelTest(TestCase, TestValidationErrorMixin):
             person,
             "title",
             "Value 'FooBar' is not a valid choice.")
+
+class AdressModelTest(TestCase):
+    def test_saving_and_retrieving_adress(self):
+        adress = Adress()
+
+        adress.street = "Musterstraße 123"
+        adress.postal_code = "12345"
+        adress.city = "Musterstadt"
+        adress.country = "Musterland"
+
+        adress.save()
+
+        saved_adresses = Adress.objects.all()
+        self.assertEqual(saved_adresses.count(), 1)
+
+        saved_adress = saved_adresses[0]
+
+        self.assertEqual(saved_adress.street, "Musterstraße 123")
+        self.assertEqual(saved_adress.postal_code, "12345")
+        self.assertEqual(saved_adress.city, "Musterstadt")
+        self.assertEqual(saved_adress.country, "Musterland")
