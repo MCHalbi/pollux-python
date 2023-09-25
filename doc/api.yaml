@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Pollux API
+  description: A RESTful API to access and interact with Pollux data
+  version: "0.1"
+
+tags:
+  - name: people
+    description: Informations about people
+
+paths:
+  /people:
+    get:
+      tags:
+        - people
+      summary: Get all the people
+      responses:
+        '200':
+          description: Everything worked
