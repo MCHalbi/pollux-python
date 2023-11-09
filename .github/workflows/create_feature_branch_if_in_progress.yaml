@@ -1,0 +1,20 @@
+name: Create feature branch if issue is moved to "In Progress"
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  create-feature-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+
+    - name: Create branch on "In Progress" label
+      run: |
+        if [ "${{ github.event_name }}" == "issues" ]; then
+          echo "Changed to ${{ github.event.action }}"
+        fi
